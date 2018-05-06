@@ -1,26 +1,6 @@
 <template>
-<section id="main_section">
-	<div class="layout-search">
-    <div class="row main-search">
-	<div class="col-md-6">
-		<img src="static/ressources/logo.png" alt="">
-	</div>
+<section class="main_section">
 
-	<div class="col-md-5">
-		<form class="form-inline">
-		  <div class="input-group input-search-group mb-2 mr-sm-2 mb-sm-0">
-		    <input type="text" class="form-control" placeholder="Search">
-		    <div class="input-group-addon search-icon"><i class="fa fa-search"></i></div>
-		  </div>
-		</form>
-	</div>
-
-	<div class="col-md-1">
-		<img src="static/ressources/cart.png" alt=""> cart
-	</div>
-
-  </div>
- </div>
    <nav class="navbar navbar-default main-menu">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -36,18 +16,18 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="#">HOME</a></li>
-        <li><a href="#">WOMEN</a></li>
-        <li><a href="#">MEN</a></li>
-        <li><a href="#">SALE</a></li>
-        <li><a href="#">ACCESSORIES</a></li>
-        <li><a href="#">VIP</a></li>
+        <li><a href="#" @click="filter_type('0')" >HOME</a></li>
+        <li><a href="#" @click="filter_type('2')">WOMEN</a></li>
+        <li><a href="#" @click="filter_type('1')">MEN</a></li>
+        <li><a href="#" @click="filter_type('3')">SALE</a></li>
+        <li><a href="#" @click="filter_type('4')">ACCESSORIES</a></li>
+        <li><a href="#" @click="filter_type('5')">VIP</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 <div class="main-shopping-cart">
-<h3>Shopping cart</h3>
+<h3>Products</h3>
 <table class="rwd-table">
   <tr>
     <th>Product Image</th>
@@ -57,10 +37,11 @@
     <th></th>
     <th>Total Price</th>
   </tr>
-  <tr>
-    <td data-th="Product Image" class="article-icon"><img src="https://raw.githubusercontent.com/hsbiti/projet_web_m2/master/public/ressources/article_icon.png?token=ALRMPKrCiY9nssSJNA1zFl3YapDREalyks5a8wbiwA%3D%3D" alt=""></td>
+  
+  <tr v-for="item in products">
+    <td data-th="Product Image" class="article-icon"><img :src="'static/ressources/' + item.image_url" alt=""></td>
     <td data-th="Product Name">
-      Adventure, Sci-fi
+      {{ item.name }}
       <div class="dropdown">
         <button class="btn btn-default dropdown-toggle show-options" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           Show options
@@ -75,134 +56,131 @@
         </ul>
       </div>
     </td>
-    <td data-th="Qty" class="col-md-1"><input type="number" style="width: 33%"></td>
-    <td data-th="Price">$460,935,665</td>
+    <td data-th="Qty" class="col-md-1"><input type="number" min="0" style="width: 33%" v-model="item.qty"></td>
+    <td data-th="Price">${{ item.price }}</td>
     <td data-th="">=</td>
-    <td data-th="Total Price">$460,935,665</td>
+    <td data-th="Total Price">${{ item.price * (item.qty > 0 ? item.qty : 0)   }} </td>
   </tr>
-  <tr>
-    <td data-th="Product Image" class="article-icon"><img src="static/ressources/article_icon.png" alt=""></td>
-    <td data-th="Product Name">"Comedy"
-      <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle show-options" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          Show options
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li role="separator" class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
-      </div>
-    </td>
-    <td data-th="Qty" class="col-md-1"><input type="number" style="width: 33%"></td>
-    <td data-th="Price">$16,295,774</td>
-    <td data-th="">=</td>
-    <td data-th="Total Price">$460,935,665</td>
-  </tr>
-  <tr>
-    <td data-th="Product Image" class="article-icon"><img src="static/ressources/article_icon.png" alt=""></td>
-    <td data-th="Product Name">Comedy, Drama
-      <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle show-options" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          Show options
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li role="separator" class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
-      </div>
-    </td>
-    <td data-th="Qty" class="col-md-1"><input type="number" style="width: 33%"></td>
-    <td data-th="Price">$115,000,000</td>
-    <td data-th="">=</td>
-    <td data-th="Total Price">$460,935,665</td>
-  </tr>
+
   <tr class="update-cart-row">
     <td></td>
     <td></td>
     <td></td>
     <td></td>
     <td></td>
-    <td><span class="btn btn-black">UPDATE SHOPPING CART</span></td>
+    <td><span class="btn btn-black" @click="addToCarts()">UPDATE SHOPPING CART</span></td>
   </tr>
 </table>
 </div>
-<div class="main-propositions">
-	<h3>You might also be interested</h3>
-	<div class="owl-carousel owl-theme">
-	    <div class="item"><img src="static/ressources/article_icon.png" alt="">
-	    	Title<br/>
-	    	<b>$180</b><br/>
-	    	<button class="btn btn-default"><img src="static/ressources/small_cart.png" style="display:inline; width: 20px;">Add to cart</button>
-	    	<button class="btn btn-default"><i class="fa fa-heart"></i></button>
-	    	<button class="btn btn-default" style="height: 35px;"><img src="static/ressources/double_arrow.png" alt=""></button>
-
-	    </div>
-			<div class="item"><img src="static/ressources/article_icon.png" alt="">
-				Title<br/>
-				<b>$180</b><br/>
-				<button class="btn btn-default"><img src="static/ressources/small_cart.png" style="display:inline; width: 20px;">Add to cart</button>
-				<button class="btn btn-default"><i class="fa fa-heart"></i></button>
-				<button class="btn btn-default" style="height: 35px;"><img src="static/ressources/double_arrow.png" alt=""></button>
-
-			</div>
-			<div class="item"><img src="static/ressources/article_icon.png" alt="">
-				Title<br/>
-				<b>$180</b><br/>
-				<button class="btn btn-default"><img src="static/ressources/small_cart.png" style="display:inline; width: 20px;">Add to cart</button>
-				<button class="btn btn-default"><i class="fa fa-heart"></i></button>
-				<button class="btn btn-default" style="height: 35px;"><img src="static/ressources/double_arrow.png" alt=""></button>
-
-			</div>
-			<div class="item"><img src="static/ressources/article_icon.png" alt="">
-				Title<br/>
-				<b>$180</b><br/>
-				<button class="btn btn-default"><img src="static/ressources/small_cart.png" style="display:inline; width: 20px;">Add to cart</button>
-				<button class="btn btn-default"><i class="fa fa-heart"></i></button>
-				<button class="btn btn-default" style="height: 35px;"><img src="static/ressources/double_arrow.png" alt=""></button>
-
-			</div>
-
-			<div class="item"><img src="static/ressources/article_icon.png" alt="">
-				Title<br/>
-				<b>$180</b><br/>
-				<button class="btn btn-default"><img src="static/ressources/small_cart.png" style="display:inline; width: 20px;">Add to cart</button>
-				<button class="btn btn-default"><i class="fa fa-heart"></i></button>
-				<button class="btn btn-default" style="height: 35px;"><img src="static/ressources/double_arrow.png" alt=""></button>
-
-			</div>
-			<div class="item"><img src="static/ressources/article_icon.png" alt="">
- 			 Title<br/>
- 			 <b>$180</b><br/>
- 			 <button class="btn btn-default"><img src="static/ressources/small_cart.png" style="display:inline; width: 20px;">Add to cart</button>
- 			 <button class="btn btn-default"><i class="fa fa-heart"></i></button>
- 			 <button class="btn btn-default" style="height: 35px;"><img src="static/ressources/double_arrow.png" alt=""></button>
-
- 		 </div>
-		 <div class="item"><img src="static/ressources/article_icon.png" alt="">
-			 Title<br/>
-			 <b>$180</b><br/>
-			 <button class="btn btn-default"><img src="static/ressources/small_cart.png" style="display:inline; width: 20px;">Add to cart</button>
-			 <button class="btn btn-default"><i class="fa fa-heart"></i></button>
-			 <button class="btn btn-default" style="height: 35px;"><img src="static/ressources/double_arrow.png" alt=""></button>
-
-		 </div>
-		 <div class="item"><img src="static/ressources/article_icon.png" alt="">
-			 Title<br/>
-			 <b>$180</b><br/>
-			 <button class="btn btn-default"><img src="static/ressources/small_cart.png" style="display:inline; width: 20px;">Add to cart</button>
-			 <button class="btn btn-default"><i class="fa fa-heart"></i></button>
-			 <button class="btn btn-default" style="height: 35px;"><img src="static/ressources/double_arrow.png" alt=""></button>
-
-		 </div>
-	</div>
-</div>
 </section>
 </template>
+
+<script>
+import ProductService from '../services/ProductService'
+export default {
+  data () {
+    return {
+      carts: [],
+      newCart: null,
+      visibility: 'all',
+      error: null,
+      products: [],
+      allProducts: []
+    }
+  },
+  methods: {
+
+    filter_type(type){
+      this.products = [];
+      this.allProducts.forEach(elem => {
+        if(elem.category == type)
+        {
+          this.products.push(elem);
+        }
+      });
+      if(type == 0)
+        this.products = this.allProducts;
+    },
+    containsObject(obj, list) {
+      var i;
+      for (i = 0; i < list.length; i++) {
+          if (list[i].name == obj.name) {
+              return true;
+          }
+      }
+
+      return false;
+    },
+    getIdObject(obj, list) {
+      var i;
+      for (i = 0; i < list.length; i++) {
+          if (list[i].name == obj.name) {
+              return i;
+          }
+      }
+
+      return 0;
+    },
+    addToCarts(){
+      //this.carts = [];
+      var total = 0;
+      this.products.filter((obj) => {
+        if(obj.qty > 0)
+        {
+          total++;
+          this.carts.push(obj);  
+        }
+             
+       });
+      if(total > 0)
+      {
+        swal({
+          position: 'top-end',
+          type: 'success',
+          title: 'Your shopping cart has been updated !',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+      else
+      {
+        swal({
+          type: 'error',
+          title: 'Oops...',
+          text: 'You have selected 0 quantity'
+        });
+      }
+      this.$store.dispatch('setCarts', this.carts);
+    },
+    async fetch(){
+      try{
+        const response = await ProductService.fetchProducts({
+         search: null,
+         filter: 0 // 0 = all
+        });
+        if(response.data)
+        {
+          this.error = null;
+          this.allProducts = response.data.info.map((obj) => {
+              if(this.containsObject(obj, this.$store.state.carts))
+              {
+                obj.qty = this.$store.state.carts[this.getIdObject(obj, this.$store.state.carts)].qty;
+              }
+              else
+                obj.qty = 0;
+              return obj;
+          })
+          this.products = this.allProducts;
+        }
+      } catch(error){
+        if(error.response)
+          this.error = error.response.data.error;
+      }
+     
+    }
+  },
+  mounted(){
+    this.fetch();
+  }
+}
+</script>

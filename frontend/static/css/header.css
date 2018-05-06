@@ -15,6 +15,10 @@
   .top-navbar .navbar-nav li .dropdown-toggle {
     color: white;
   }
+
+  .navbar-default .navbar-nav>li>a {
+    color: white;
+  }
   .top-navbar .navbar-nav li .dropdown-toggle .language-label {
     padding-left: 10px;
   }
@@ -36,136 +40,136 @@
     padding-right: 0px;
   }
 }
-#main_section {
+.main_section {
   padding-left: 10px;
   padding-right: 10px;
   margin-left: 10px;
   margin-right: 10px;
 }
-#main_section h3 {
+.main_section h3 {
   font-weight: 300;
   border-bottom: 1px solid #ddd;
   padding-bottom: 25px;
   margin-bottom: 40px;
 }
-#main_section .main-search {
+.main_section .main-search {
   padding-top: 20px;
   padding-bottom: 35px;
 }
-#main_section .main-search .input-search-group {
+.main_section .main-search .input-search-group {
   width: 100%;
 }
-#main_section .main-search .input-search-group input {
+.main_section .main-search .input-search-group input {
   border-right: 0px;
   height: 45px;
   border-radius: 0px;
 }
-#main_section .main-search .input-search-group .search-icon {
+.main_section .main-search .input-search-group .search-icon {
   width: 1%;
   border-left: 0px;
   background-color: white;
   border-radius: 0px;
 }
-#main_section .main-menu {
+.main_section .main-menu {
   background-color: #ececec;
   border-bottom: 5px solid black;
   border-radius: 0px;
 }
-#main_section .main-menu .navbar-collapse {
+.main_section .main-menu .navbar-collapse {
   padding-left: 0px;
 }
-#main_section .main-menu .navbar-nav li a {
+.main_section .main-menu .navbar-nav li a {
   padding-left: 0px;
   padding-right: 30px;
 }
-#main_section .main-shopping-cart .rwd-table {
+.main_section .main-shopping-cart .rwd-table {
   margin: 1em 0;
   min-width: 300px;
 }
-#main_section .main-shopping-cart .rwd-table tr {
+.main_section .main-shopping-cart .rwd-table tr {
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
 }
-#main_section .main-shopping-cart .rwd-table th {
+.main_section .main-shopping-cart .rwd-table th {
   display: none;
 }
-#main_section .main-shopping-cart .rwd-table td {
+.main_section .main-shopping-cart .rwd-table td {
   display: block;
 }
-#main_section .main-shopping-cart .rwd-table td:first-child {
+.main_section .main-shopping-cart .rwd-table td:first-child {
   padding-top: .5em;
 }
-#main_section .main-shopping-cart .rwd-table td:last-child {
+.main_section .main-shopping-cart .rwd-table td:last-child {
   padding-bottom: .5em;
 }
-#main_section .main-shopping-cart .rwd-table td:before {
+.main_section .main-shopping-cart .rwd-table td:before {
   content: attr(data-th) ": ";
   font-weight: bold;
   width: 6.5em;
   display: inline-block;
 }
 @media (min-width: 480px) {
-  #main_section .main-shopping-cart .rwd-table td:before {
+  .main_section .main-shopping-cart .rwd-table td:before {
     display: none;
   }
 }
-#main_section .main-shopping-cart .rwd-table th, #main_section .main-shopping-cart .rwd-table td {
+.main_section .main-shopping-cart .rwd-table th, .main_section .main-shopping-cart .rwd-table td {
   text-align: left;
 }
 @media (min-width: 480px) {
-  #main_section .main-shopping-cart .rwd-table th, #main_section .main-shopping-cart .rwd-table td {
+  .main_section .main-shopping-cart .rwd-table th, .main_section .main-shopping-cart .rwd-table td {
     display: table-cell;
     padding: .25em .5em;
   }
-  #main_section .main-shopping-cart .rwd-table th:first-child, #main_section .main-shopping-cart .rwd-table td:first-child {
+  .main_section .main-shopping-cart .rwd-table th:first-child, .main_section .main-shopping-cart .rwd-table td:first-child {
     padding-left: 0;
   }
-  #main_section .main-shopping-cart .rwd-table th:last-child, #main_section .main-shopping-cart .rwd-table td:last-child {
+  .main_section .main-shopping-cart .rwd-table th:last-child, .main_section .main-shopping-cart .rwd-table td:last-child {
     padding-right: 0;
   }
 }
-#main_section .main-shopping-cart .rwd-table {
+.main_section .main-shopping-cart .rwd-table {
   overflow: hidden;
   width: 100%;
 }
-#main_section .main-shopping-cart .rwd-table tbody {
+.main_section .main-shopping-cart .rwd-table tbody {
   border: 1px solid #ddd;
 }
-#main_section .main-shopping-cart .rwd-table .article-icon img {
+.main_section .main-shopping-cart .rwd-table .article-icon img {
   width: 100px;
 }
-#main_section .main-shopping-cart .rwd-table tr.update-cart-row td:last-child {
+.main_section .main-shopping-cart .rwd-table tr.update-cart-row td:last-child {
   float: right;
 }
-#main_section .main-shopping-cart .rwd-table tr .show-options {
+.main_section .main-shopping-cart .rwd-table tr .show-options {
   border: 1px solid black;
   border-radius: 0px;
   margin-top: 45px;
 }
-#main_section .main-shopping-cart .rwd-table th, #main_section .main-shopping-cart .rwd-table td {
+.main_section .main-shopping-cart .rwd-table th, .main_section .main-shopping-cart .rwd-table td {
   margin: .5em 1em;
 }
 @media (min-width: 480px) {
-  #main_section .main-shopping-cart .rwd-table th, #main_section .main-shopping-cart .rwd-table td {
+  .main_section .main-shopping-cart .rwd-table th, .main_section .main-shopping-cart .rwd-table td {
     padding: 0.5em !important;
   }
 }
-#main_section .main-shopping-cart .rwd-table th, #main_section .main-shopping-cart .rwd-table td:before {
+.main_section .main-shopping-cart .rwd-table th, .main_section .main-shopping-cart .rwd-table td:before {
   color: black;
 }
-#main_section .main-shopping-cart .rwd-table tr:nth-child(1) th {
+.main_section .main-shopping-cart .rwd-table tr:nth-child(1) th {
   text-transform: uppercase;
 }
-#main_section .main-shopping-cart .btn-black {
+.main_section .main-shopping-cart .btn-black {
   color: white;
   background: black;
   border-radius: 0px;
   padding: 12px;
 }
-#main_section .main-propositions .owl-carousel .owl-item {
+.main_section .main-propositions .owl-carousel .owl-item {
   text-align: center;
 }
-#main_section .main-propositions .owl-carousel .owl-item .item {
+.main_section .main-propositions .owl-carousel .owl-item .item {
   width: 80%;
 }
 
@@ -203,4 +207,36 @@ footer .footer-last {
 }
 footer .footer-last a {
   color: white;
+}
+.modal-header {
+  padding: 0;
+}
+.modal-header .close {
+  padding: 10px 15px;
+}
+.modal-header ul {
+  border: none;
+}
+.modal-header ul li {
+  margin: 0;
+}
+.modal-header ul li a {
+  border: none;
+  border-radius: 0;
+}
+.modal-header ul li.active a {
+  color: #e12f27;
+}
+.modal-header ul li a:hover {
+  border: none;
+}
+.modal-header ul li a span {
+  margin-left: 10px;
+}
+.modal-body .form-group {
+  margin-bottom: 10px;
+}
+
+.danger-alert{
+  color: red;
 }
