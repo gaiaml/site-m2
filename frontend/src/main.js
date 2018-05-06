@@ -9,6 +9,7 @@ import store from '@/store/store'
 import moment from 'moment'
 
 Vue.config.productionTip = false
+Vue.config.silent = true
 
  Vue.filter('formatDate', function(value) {
     if (value) {

@@ -32,10 +32,11 @@
   <tr>
     <th>Product Image</th>
     <th>Product Name</th>
+    <th>Date</th>
     <th>Qty</th>
+    <th></th>
     <th>Price</th>
     <th></th>
-    <th>Date</th>
     <th>Total Price</th>
     <th></th>
   </tr>
@@ -57,10 +58,11 @@
         </ul>
       </div>
     </td>
+    <td data-th="">{{ item.createdAt | formatDate}}</td>
     <td data-th="Qty" class="col-md-1">{{ item.qty }}</td>
+    <td data-th="">*</td>
     <td data-th="Price">${{ item.Product.price }}</td>
     <td data-th="">=</td>
-    <td data-th="">{{ item.createdAt | formatDate}}</td>
     <td data-th="Total Price">${{ item.Product.price * (item.qty > 0 ? item.qty : 0)   }} </td>
   </tr>
 

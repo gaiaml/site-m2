@@ -101,6 +101,17 @@ export default {
       if(type == 0)
         this.products = this.allProducts;
     },
+    filter_search(search){
+      this.products = [];
+      this.allProducts.forEach(elem => {
+        if(elem.name.toUpperCase().includes(search.toUpperCase()))
+        {
+          this.products.push(elem);
+        }
+      });
+      if(search == '')
+        this.products = this.allProducts;
+    },
     containsObject(obj, list) {
       var i;
       for (i = 0; i < list.length; i++) {
@@ -171,6 +182,7 @@ export default {
               return obj;
           })
           this.products = this.allProducts;
+          this.$store.dispatch('setAllProducts', this.allProducts);
         }
       } catch(error){
         if(error.response)
@@ -181,6 +193,9 @@ export default {
   },
   mounted(){
     this.fetch();
+    this.$root.$on('search', (text) => { // here you need to use the arrow function
+     this.filter_search(text);
+    })
   }
 }
 </script>

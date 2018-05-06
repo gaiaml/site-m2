@@ -40,6 +40,7 @@ app.post("/order", function(req, res){
           res.send({info: data});
         })
         .catch(function(err){
+          console.log(err);
           res.status(403).send({'error' : err});
         });
 
@@ -88,7 +89,7 @@ app.post("/register", (req,res) =>  {
   };
   // check if login exists :
   models.User.findOne({
-    attributes: ['email', 'name'],
+    attributes: ['id','email', 'name'],
     where: {email : userData.email}
   }).then(function(userFound){
     if(!userFound){

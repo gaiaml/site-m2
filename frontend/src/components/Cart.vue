@@ -31,7 +31,7 @@
         </ul>
       </div>
     </td>
-    <td data-th="Qty" class="col-md-1"><input type="number" min="0" :value="item.qty" style="width: 33%"></td>
+    <td data-th="Qty" class="col-md-1"><input type="number" min="0" v-model="item.qty" style="width: 33%"></td>
     <td data-th="Price">${{ item.price }}</td>
     <td data-th="">=</td>
     <td data-th="Total Price">${{ item.price * (item.qty > 0 ? item.qty : 0)   }} </td>

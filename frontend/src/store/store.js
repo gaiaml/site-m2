@@ -3,10 +3,9 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
-export const strict = false
 
 export default new Vuex.Store({
-  strict: true,
+  strict: false,
   plugins: [
     createPersistedState()
   ],
@@ -14,7 +13,8 @@ export default new Vuex.Store({
     user: null,
     isUserLoggedIn: false,
     carts : [],
-    totalCarts : 0
+    totalCarts : 0,
+    allProducts : []
   },
   mutations: {
     setUser (state, user) {
@@ -34,6 +34,9 @@ export default new Vuex.Store({
       carts.forEach(element => {
         state.totalCarts+=eval(element.qty);
       });
+    },
+    setAllProducts (state, products) {
+      state.allProducts = products;
     },
     removeItemCarts(state, item){
       for( var i = state.carts.length; i--;){
@@ -62,6 +65,9 @@ export default new Vuex.Store({
     },
     clearItemCarts ({commit}) {
       commit('clearItemCarts')
+    },
+    setAllProducts ({commit}, products) {
+      commit('setAllProducts', products)
     }
   }
 })
