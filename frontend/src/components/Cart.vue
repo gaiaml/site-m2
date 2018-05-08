@@ -1,5 +1,5 @@
 <template>
-<section class="main_section">
+<section class="main">
 <div class="main-shopping-cart">
 <h3>Shopping cart</h3>
 <div class="danger-alert" v-html="error"></div>

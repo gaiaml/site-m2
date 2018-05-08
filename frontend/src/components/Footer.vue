@@ -104,7 +104,7 @@
         </a>
     </li>
     <li class="list-unstyled list-inline pull-right">
-        <img src="ressources/payment_cards.png" alt="">
+        <img src="static/ressources/payment.png" alt="">
     </li>
 </ul>
 </div>

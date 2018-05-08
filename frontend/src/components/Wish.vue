@@ -26,44 +26,31 @@
   </div><!-- /.container-fluid -->
 </nav>
 <div class="main-shopping-cart">
-<h3>My commands</h3>
+<h3>My wishlist</h3>
 <div class="danger-alert" v-html="error"></div>
 <table class="rwd-table">
   <tr>
     <th>Product Image</th>
     <th>Product Name</th>
-    <th>Date</th>
-    <th>Qty</th>
+    <th>PRICE</th>
     <th></th>
-    <th>Price</th>
     <th></th>
-    <th>Total Price</th>
+    <th></th>
+    <th></th>
     <th></th>
   </tr>
-  <tr v-for="item in commands">
-    <td data-th="Product Image" class="article-icon"><img :src="'static/ressources/' + item.Product.image_url" alt=""></td>
+  <tr v-for="item in wish">
+
+    <td data-th="Product Image" class="article-icon"><img :src="'static/ressources/' + item.image_url" alt=""></td>
     <td data-th="Product Name">
-      {{ item.Product.name }}
-      <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle show-options" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          Show options
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li role="separator" class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
-      </div>
+      {{ item.name }}
     </td>
-    <td data-th="">{{ item.createdAt | formatDate}}</td>
-    <td data-th="Qty" class="col-md-1">{{ item.qty }}</td>
-    <td data-th="">*</td>
-    <td data-th="Price">${{ item.Product.price }}</td>
-    <td data-th="">=</td>
-    <td data-th="Total Price">${{ item.Product.price * (item.qty > 0 ? item.qty : 0)   }} </td>
+    <td data-th="Price">${{ item.price }}</td>
+    <td data-th="Qty" class="col-md-1"></td>
+    <td data-th=""></td>
+    <td data-th=""></td>
+    <td data-th="Total Price"></td>
+    <td><button class="btn btn-danger" @click="remove(item)" >Remove</button></td>
   </tr>
 
   <tr class="update-cart-row">
@@ -86,41 +73,44 @@ import ProductService from '../services/ProductService'
 export default {
   data () {
     return {
-      commands: [],
-      allCommands: [],
+      wish: [],
+      allWish: [],
       error: null,
     }
   },
   methods: {
     filter_type(type){
-      this.commands = [];
-      console.log(this.allCommands);
-      this.allCommands.forEach(elem => {
-        if(elem.Product.category == type)
+      this.wish = [];
+      this.allWish.forEach(elem => {
+        if(elem.category == type)
         {
-          this.commands.push(elem);
+          this.wish.push(elem);
         }
       });
       if(type == 0)
-        this.commands = this.allCommands;
+        this.wish = this.allWish;
     },
-    async fetchCommand(){
-        try{
-            const response = await ProductService.fetchCommands({id: this.$store.state.user.id});
-            this.allCommands = response.data.info;
-            this.commands = this.allCommands;
-            console.log(this.commands);
-        }catch(err){
-            swal({
-              type: 'error',
-              title: 'Oops...',
-              text: err
-            })
+    removeItemWish(wish, item){
+      for( var i = wish.length; i--;){
+        if ( wish[i] == item)
+        {
+          wish.splice(i, 1);
         }
+        
+      }
+    },
+    fetchWish(){
+        this.wish = this.$store.state.wish;
+        this.allWish = this.$store.state.wish;
+    },
+    remove(item){
+       this.$store.dispatch('removeItemWish', item);
+       this.removeItemWish(this.wish, item);
+       
     }
   },
   mounted(){
-      this.fetchCommand();
+      this.fetchWish();
   }
 }
 </script>

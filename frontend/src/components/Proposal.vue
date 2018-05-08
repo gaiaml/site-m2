@@ -1,5 +1,5 @@
 <template>
-<section class="main_section">
+<section class="main">
 <div class="main-propositions">
 	<h3>You might also be interested</h3>
 	<div class="owl-carousel owl-theme">

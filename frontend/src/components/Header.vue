@@ -51,7 +51,7 @@
               <li v-if="$store.state.isUserLoggedIn" @click="logout"><a href="#">Log out</a></li>
             </ul>
           </li>
-          <li><a href="#">Whishlist</a></li>
+          <li><router-link to="/Wish">Whishlist ({{ $store.state.totalWish }} items)</router-link></li>
           <li><router-link to="/Carts">My Cart ({{ $store.state.totalCarts }} items)</router-link></li>
           <li><a href="#">Blog</a></li>
           <li style="margin-top: 2%;" v-if="!$store.state.isUserLoggedIn"><button class="btn btn-success" data-toggle="modal" data-target=".login-register-form">Login or register</button></li>

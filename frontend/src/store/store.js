@@ -14,7 +14,9 @@ export default new Vuex.Store({
     isUserLoggedIn: false,
     carts : [],
     totalCarts : 0,
-    allProducts : []
+    allProducts : [],
+    totalWish : 0,
+    wish: []
   },
   mutations: {
     setUser (state, user) {
@@ -35,6 +37,10 @@ export default new Vuex.Store({
         state.totalCarts+=eval(element.qty);
       });
     },
+    setWish (state, wish) {
+      state.wish.push(wish);
+      state.totalWish = state.wish.length;
+    },
     setAllProducts (state, products) {
       state.allProducts = products;
     },
@@ -44,6 +50,16 @@ export default new Vuex.Store({
         {
           state.carts.splice(i, 1);
           state.totalCarts -= item.qty;
+        }
+        
+      }
+    },
+    removeItemWish(state, item){
+      for( var i = state.wish.length; i--;){
+        if ( state.wish[i] == item)
+        {
+          state.wish.splice(i, 1);
+          state.totalWish -= 1;
         }
         
       }
@@ -68,6 +84,12 @@ export default new Vuex.Store({
     },
     setAllProducts ({commit}, products) {
       commit('setAllProducts', products)
-    }
+    },
+    addWish ({commit}, wish) {
+      commit('setWish', wish)
+    },
+    removeItemWish ({commit}, item) {
+      commit('removeItemWish', item)
+    },
   }
 })

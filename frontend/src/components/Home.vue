@@ -1,5 +1,5 @@
 <template>
-<section class="main_section">
+<section class="main">
 
    <nav class="navbar navbar-default main-menu">
   <div class="container-fluid">
@@ -48,11 +48,8 @@
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li role="separator" class="divider"></li>
-          <li><a href="#">Separated link</a></li>
+          <li><a href="#" @click="addToWish(item)" >Add to wishlist </a></li>
+          <li><a href="#" @click="addToCart(item)" >Add to cart </a></li>
         </ul>
       </div>
     </td>
@@ -132,10 +129,39 @@ export default {
 
       return 0;
     },
+    addToCart(item){
+      if(item.qty > 0)
+      {
+        for( var i = this.carts.length; i--;){
+          if ( this.carts[i].name == item.name)
+          {
+            this.carts.splice(i, 1);
+          }         
+        }
+        this.carts.push(item);
+
+        this.$store.dispatch('setCarts', this.carts);
+        swal({
+          position: 'top-end',
+          type: 'success',
+          title: 'Your shopping cart has been updated !',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+      else
+      {
+         swal({
+          type: 'error',
+          title: 'Oops...',
+          text: 'You have selected 0 quantity'
+        });
+      }
+    },
     addToCarts(){
-      //this.carts = [];
+      this.carts = [];
       var total = 0;
-      this.products.filter((obj) => {
+      this.allProducts.filter((obj) => {
         if(obj.qty > 0)
         {
           total++;
@@ -182,6 +208,7 @@ export default {
               return obj;
           })
           this.products = this.allProducts;
+          this.carts = this.$store.state.carts;
           this.$store.dispatch('setAllProducts', this.allProducts);
         }
       } catch(error){
@@ -189,11 +216,35 @@ export default {
           this.error = error.response.data.error;
       }
      
-    }
+    },
+    addToWish(item) {
+      console.log(item);
+      console.log(this.$store.state.wish);
+      if(!this.containsObject(item, this.$store.state.wish))
+      {
+        this.$store.dispatch('addWish', item);
+        swal({
+          position: 'top-end',
+          type: 'success',
+          title: 'Your item was add into the whishlist !',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+      else
+      {
+         swal({
+          type: 'error',
+          title: 'Oops...',
+          text: 'This product is already in your whishlist !'
+        });
+      }
+      
+   },
   },
   mounted(){
     this.fetch();
-    this.$root.$on('search', (text) => { // here you need to use the arrow function
+    this.$root.$on('search', (text) => { 
      this.filter_search(text);
     })
   }
