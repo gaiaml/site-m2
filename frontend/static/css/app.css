@@ -251,3 +251,6 @@ footer .footer-last a {
   min-width: 26px;
  
  }
+#divs { overflow:auto; cursor:default; }
+#divs div { float:left; margin:5px; border:1px solid gray; background-color:#ccc; width:100px; height:100px; }
+#divs div.selected { border:1px solid red; background-color:#faa; }

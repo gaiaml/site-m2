@@ -41,7 +41,7 @@
   </tr>
   <tr v-for="item in wish">
 
-    <td data-th="Product Image" class="article-icon"><img :src="'static/ressources/' + item.image_url" alt=""></td>
+    <td data-th="Product Image" class="article-icon"><img :src="'static/ressources/' + item.ProductImages[0].image_url" alt=""></td>
     <td data-th="Product Name">
       {{ item.name }}
     </td>

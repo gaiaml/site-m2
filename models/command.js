@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   Command.associate = function(models) {
     models.Command.belongsTo(models.User, {foreignKey: 'id'})
     models.Command.belongsTo(models.Product, {foreignKey: 'idProducts'})
+    models.Command.belongsTo(models.ProductImage, {foreignKey: 'idProducts'})
   };
   return Command;
 };

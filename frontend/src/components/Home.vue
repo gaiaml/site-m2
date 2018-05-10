@@ -1,6 +1,7 @@
 <template>
 <section class="main">
 
+
    <nav class="navbar navbar-default main-menu">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -28,6 +29,7 @@
 </nav>
 <div class="main-shopping-cart">
 <h3>Products</h3>
+    
 <table class="rwd-table">
   <tr>
     <th>Product Image</th>
@@ -39,7 +41,7 @@
   </tr>
   
   <tr v-for="item in products">
-    <td data-th="Product Image" class="article-icon"><img :src="'static/ressources/' + item.image_url" alt=""></td>
+    <td data-th="Product Image" class="article-icon"><img @mouseout="mouseOut(item)"  @mouseover="mouseOver(item)" @click="selectItem(item)" :src="'static/ressources/' + item.ProductImages[0].image_url" alt="" data-toggle="modal" data-target=".slider-image" ></td>
     <td data-th="Product Name">
       {{ item.name }}
       <div class="dropdown">
@@ -69,6 +71,52 @@
   </tr>
 </table>
 </div>
+    <div class="modal fade slider-image" role="dialog">
+      <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">
+                      <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                <div id='carousel-example-generic' class='carousel slide' data-ride='carousel'>
+                    <!-- Wrapper for slides -->
+                    <div class='carousel-inner'>
+                      <div v-for="(image,index) in clickedItem.ProductImages" class="item" :class="{ 'active': index === 0 }">             
+                        <img :src="'static/ressources/' + image.image_url" />
+                     </div>
+                    </div>
+                        
+                    <!-- Controls -->
+                    <a class='left carousel-control' href='#carousel-example-generic' data-slide='prev'>
+                        <span class='glyphicon glyphicon-chevron-left'></span>
+                    </a>
+                    <a class='right carousel-control' href='#carousel-example-generic' data-slide='next'>
+                        <span class='glyphicon glyphicon-chevron-right'></span>
+                    </a>
+                </div> <br />
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="main-propositions">
+	<h3>You might also be interested</h3>
+  <div class="owl-carousel owl-theme">
+	       <div class="container">
+        <div v-for="item in proposal" class="col-md-2">
+          <img :src="'static/ressources/' + item.ProductImages[0].image_url" width="150" alt="">
+           {{  item.name}} <br/>
+          <b>${{  item.price }} </b><br/>
+          <button @click="addToCartByProposal(item)" class="btn btn-default"><img src="static/ressources/small_cart.png" style="display:inline; width: 20px;">Add to cart</button>
+          <button @click="addToWish(item)" class="btn btn-default"><i class="fa fa-heart"></i></button>
+          <button @click="selectItem(item)" data-toggle="modal" data-target=".slider-image" class="btn btn-default" style="height: 35px;"><img src="static/ressources/double_arrow.png" alt=""></button>
+      </div>
+    </div>
+
+</div>
+</div>
+
 </section>
 </template>
 
@@ -82,11 +130,45 @@ export default {
       visibility: 'all',
       error: null,
       products: [],
-      allProducts: []
+      allProducts: [],
+      clickedItem: [],
+      statistics: [],
+      proposal: []
     }
   },
   methods: {
+    addToCartByProposal : function(item){
+      item.qty = eval(item.qty) + 1;
+      this.addToCart(item);
 
+    },
+    mouseOut: function(item){
+      var data = {idUser : this.$store.state.user ? this.$store.state.user.id : -1, idCategory: item.category};
+      var index = this.getIdObjectStat(data, this.statistics);
+      this.statistics[index].timer = Math.round(eval(this.statistics[index].timer) + (new Date().getTime() / 1000 - this.statistics[index].start))
+      
+      // mettre a jour
+      ProductService.addStats({
+            idUser : this.$store.state.user ? this.$store.state.user.id : -1,
+            idCategory : this.statistics[index].idCategory,
+            timer : this.statistics[index].timer
+           })
+
+      this.fetchProposal();
+ 
+    },
+    mouseOver: function(item){
+      var data = {idUser : this.$store.state.user ? this.$store.state.user.id : -1, idCategory: item.category};
+      if(!this.containsObjectStat(data, this.statistics)){
+        data.timer = 0;
+        this.statistics.push(data);
+      }
+     
+      var index = this.getIdObjectStat(data, this.statistics);
+      this.statistics[index].start = new Date().getTime() / 1000;
+  ;
+ 
+    },
     filter_type(type){
       this.products = [];
       this.allProducts.forEach(elem => {
@@ -118,6 +200,27 @@ export default {
       }
 
       return false;
+    },
+    containsObjectStat(obj, list) {
+      var i;
+     
+      for (i = 0; i < list.length; i++) {
+          if (list[i].idUser == obj.idUser && list[i].idCategory == obj.idCategory ) {
+              return true;
+          }
+      }
+
+      return false;
+    },
+    getIdObjectStat(obj, list) {
+      var i;
+      for (i = 0; i < list.length; i++) {
+          if (list[i].idUser == obj.idUser && list[i].idCategory == obj.idCategory ) {
+              return i;
+          }
+      }
+
+      return 0;
     },
     getIdObject(obj, list) {
       var i;
@@ -210,6 +313,7 @@ export default {
           this.products = this.allProducts;
           this.carts = this.$store.state.carts;
           this.$store.dispatch('setAllProducts', this.allProducts);
+          this.clickedItem = [this.allProducts[0]];
         }
       } catch(error){
         if(error.response)
@@ -218,8 +322,6 @@ export default {
      
     },
     addToWish(item) {
-      console.log(item);
-      console.log(this.$store.state.wish);
       if(!this.containsObject(item, this.$store.state.wish))
       {
         this.$store.dispatch('addWish', item);
@@ -241,9 +343,46 @@ export default {
       }
       
    },
+   async fetchProposal() {
+     if(this.$store.state.user)
+     {
+       const response = await ProductService.fetchStatistics({
+         idUser: this.$store.state.user.id
+        });
+        if(response.data)
+        {
+          this.proposal = [];
+          
+          var item = response.data.info;
+          this.statistics = response.data.info;
+
+          var dumpStats = this.statistics;
+          var sortedTimer = dumpStats.map( entry => {
+            return {timer: entry.timer, category: entry.idCategory};
+          });
+         sortedTimer.sort(function(a, b) {
+            return a.timer < b.timer;
+          });
+        console.log(sortedTimer);
+          // select most popular item
+          sortedTimer.forEach(entry => {
+            this.allProducts.forEach(product => {
+              if(product.category == entry.category)
+                this.proposal.push(product);
+            });
+          });
+         
+        }
+     }
+      
+   },
+   selectItem(item) {
+     this.clickedItem = item;
+   }
   },
   mounted(){
     this.fetch();
+    this.fetchProposal();
     this.$root.$on('search', (text) => { 
      this.filter_search(text);
     })

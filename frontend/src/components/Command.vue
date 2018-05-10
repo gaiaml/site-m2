@@ -41,7 +41,7 @@
     <th></th>
   </tr>
   <tr v-for="item in commands">
-    <td data-th="Product Image" class="article-icon"><img :src="'static/ressources/' + item.Product.image_url" alt=""></td>
+    <td data-th="Product Image" class="article-icon"><img :src="'static/ressources/' + item.Product.ProductImages[0].image_url" alt=""></td>
     <td data-th="Product Name">
       {{ item.Product.name }}
       <div class="dropdown">

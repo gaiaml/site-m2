@@ -13,12 +13,42 @@ app.use(cors());
 
 app.use(express.static('public'))
 
+app.post("/statistic", function(req,res){
+  var stat = req.body;
+  if(stat.idUser > 0)
+  {
+    models.Statistic.findOne({
+      where: {idUser : stat.idUser, idCategory: stat.idCategory}
+    }).then(function(statFound){
+      if(statFound){
+        console.log(stat);
+        statFound.update(stat);
+      }
+      else{
+        models.Statistic.create(stat);
+      }
+    })
+}});
+
+app.post("/getstats", function(req,res){
+
+  models.Statistic.findAll({
+    attributes: ['idUser', 'idCategory', 'timer'],
+    where: {idUser : req.body.idUser}
+  }).then((data) => {
+    console.log(data);
+    res.send({info: data});
+  }).catch((err) => {
+    console.log(err);
+    res.status(403).send({'error' : err});
+  });
+});
 
 app.post("/commands", function(req,res){
 
   models.Command.findAll({
     where: {idCustomer : req.body.id},
-    include: [{model: models.Product}]
+    include: [{model: models.Product, include:[models.ProductImage]}]
   }).then((data) => {
     res.send({info: data});
   }).catch((err) => {
@@ -53,7 +83,7 @@ app.post("/products", function(req, res){
     filter: req.body.filter
   };
   models.Product.findAll({
-    attributes: ['id', 'image_url', 'name', 'price', 'category']
+    include: [{model: models.ProductImage}]
   }).then((data) => {
       res.send({info: data});
   }).catch((err) => {

@@ -9,5 +9,11 @@ export default {
   },
   fetchCommands (data) {
     return Api().post('commands', data)
+  },
+  fetchStatistics (data) {
+    return Api().post('getstats', data)
+  },
+  addStats (data) {
+    return Api().post('statistic', data)
   }
 }
